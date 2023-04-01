@@ -2,7 +2,7 @@
 import numpy as np
 import scipy.sparse as sp
 # Set the number of nodes in the graph
-num_nodes = 3
+num_nodes = 5
 # Set edge density
 edge_density = 0.1
 
@@ -26,31 +26,29 @@ while not connected:
         connected = True
 
 connectivity_matrix[connectivity_matrix != 0] = 1
-print(connectivity_matrix)
 
-# Loop through the edges in the graph and assign their features
-for i in range(num_nodes):
-    for j in range(num_nodes):
-        if (i != j) & (connectivity_matrix[i,j] == 1):
-            # Define the edge features as desired
-            m = 3 #module
-            t1 = 4 #teeth 1
-            t2 = 5 #teeth 2
-            b = 6 #gear thickness
-            alpha = 7 #working contact angle
-            x1 = 8 #profile shift 1
-            x2 = 9 #profile shift 2
-            # Increase dimension of connectivity matrix
-            # Assign the edge features to the connectivity matrix
-            connectivity_matrix = np.expand_dims(connectivity_matrix, axis=0)
-            print(connectivity_matrix)
-            connectivity_matrix[i, j, 1] = m
-            connectivity_matrix[i, j, 2] = t1
-            connectivity_matrix[i, j, 3] = t2
-            connectivity_matrix[i, j, 4] = b
-            connectivity_matrix[i, j, 5] = alpha
-            connectivity_matrix[i, j, 6] = x1
-            connectivity_matrix[i, j, 7] = x2
+# Instantiate empty list of edge matrixes
+E_list = []
+
+# Define function to add edge feature matrix to list
+def addToMatrix(loc, scale, size):
+    edge_matrix = np.copy(connectivity_matrix)
+    for i in range(num_nodes):
+        for j in range(num_nodes):
+            edge_matrix[i,j] *= np.random.normal(loc=loc, scale=scale, size=size)
+    E_list.append(edge_matrix)
+
+# module
+addToMatrix(2.0, 1.0, None)
+# teeth 1
+addToMatrix(30.0, 10.0, None)
+# teeth 2
+addToMatrix(30.0, 10.0, None)
+# gear thickness
+# working contact angle
+# profile shift 1
+# profile shift 2
+print(E_list)
 
 # Instantiate an empty node feature matrix with the desired shape
 node_feature_matrix = np.zeros((num_nodes, num_node_features))
