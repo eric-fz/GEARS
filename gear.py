@@ -38,7 +38,7 @@ def addToMatrix(loc, scale, size):
             edge_matrix[i,j] *= np.random.normal(loc=loc, scale=scale, size=size)
     E_list.append(edge_matrix)
 
-# module
+# module in
 addToMatrix(2.0, 1.0, None)
 # teeth 1
 addToMatrix(30.0, 10.0, None)
@@ -46,8 +46,6 @@ addToMatrix(30.0, 10.0, None)
 addToMatrix(30.0, 10.0, None)
 # gear thickness
 # working contact angle
-# profile shift 1
-# profile shift 2
 print(E_list)
 
 # Instantiate an empty node feature matrix with the desired shape
